@@ -1,6 +1,4 @@
-package lesson1;
-
-public class HomeWorkApp {
+public class Lesson1 {
   public static void main(String[] args) {
     System.out.println("Task 1");
     printThreeWords();
