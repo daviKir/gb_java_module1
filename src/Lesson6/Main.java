@@ -2,12 +2,12 @@ package Lesson6;
 
 public class Main {
   public static void main(String[] args) {
-    Cat barsik = new Cat("barsik");
-    Cat vasya = new Cat("vasya");
-    Cat mursik = new Cat("mursik");
+    Cat barsik = new Cat("barsik", 200);
+    Cat vasya = new Cat("vasya", 200);
+    Cat mursik = new Cat("mursik", 200);
 
-    Dog sharik = new Dog("sharik");
-    Dog bobik = new Dog("bobik");
+    Dog sharik = new Dog("sharik", 500, 10);
+    Dog bobik = new Dog("bobik", 500, 10);
 
     barsik.swim(10);
     vasya.run(300);

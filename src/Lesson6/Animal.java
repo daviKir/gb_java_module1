@@ -1,22 +1,32 @@
 package Lesson6;
 
 public abstract class Animal {
-  protected final String name;
   private static int animalsCount = 0;
   private static int catsCount = 0;
   private static int dogsCount = 0;
 
-  public Animal(String name) {
+  protected final String name;
+  protected final int maxRunDistance;
+  protected final int maxSwimDistance;
+
+
+  public Animal(String name, int maxRunDistance, int maxSwimDistance) {
     this.name = name;
+    this.maxRunDistance = maxRunDistance;
+    this.maxSwimDistance = maxSwimDistance;
 
     animalsCount++;
   }
 
-  protected void setCatsCount() {
+  public Animal(String name, int maxRunDistance) {
+    this(name, maxRunDistance, 0);
+  }
+
+  protected void incrementCatsCount() {
     catsCount++;
   }
 
-  protected void setDogsCount() {
+  protected void incrementDogsCount() {
     dogsCount++;
   }
 
