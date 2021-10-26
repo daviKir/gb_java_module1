@@ -11,6 +11,7 @@ public class Main {
   private static final String INC_BUTTON_TEXT = "+";
   private static final String RESET_BUTTON_TEXT = "Reset";
   private static final String SET_BUTTON_TEXT = "SET";
+  private static final String STEP_LABEL_TEXT = "Current step: ";
 
   private static final int SQUAD_BUTTON_SIZE = 40;
   private static final int RESET_BUTTON_WIDTH = 70;
@@ -19,9 +20,9 @@ public class Main {
   private static final int FIELD_HEIGHT = 40;
   private static final int SET_BUTTON_WIDTH = 40;
   private static final int SET_BUTTON_HEIGHT = 40;
-  private static final int INIT_COUNT = 0;
 
-  private static int count = INIT_COUNT;
+  private static int count = 0;
+  private static int step = 1;
 
   public static void main(String[] args) {
     JFrame counterWindow = new JFrame();
@@ -29,8 +30,8 @@ public class Main {
     counterWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     counterWindow.setBounds(800, 300, 200, 200);
 
+    addHeader(counterWindow);
     JLabel countLabel = addCountLabel(counterWindow);
-    addHeader(counterWindow, countLabel);
     addControlButtons(counterWindow, countLabel);
 
     counterWindow.setVisible(true);
@@ -44,15 +45,15 @@ public class Main {
     return countLabel;
   }
 
-  private static void addHeader(JFrame counterWindow, JLabel countLabel) {
-    JPanel headerPanel = new JPanel();
+  private static void addHeader(JFrame counterWindow) {
+    JLabel stepLabel = new JLabel(STEP_LABEL_TEXT + step);
 
     JTextField initialCountField = new JTextField();
     initialCountField.setPreferredSize(new Dimension(FIELD_WIDTH, FIELD_HEIGHT));
     initialCountField.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        setInitialValue(initialCountField, countLabel);
+        setStep(initialCountField, stepLabel);
       }
     });
 
@@ -61,19 +62,24 @@ public class Main {
     setInitValueButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        setInitialValue(initialCountField, countLabel);
+        setStep(initialCountField, stepLabel);
       }
     });
 
-    headerPanel.add(initialCountField);
-    headerPanel.add(setInitValueButton);
+    JPanel controlPanel = new JPanel();
+    controlPanel.add(initialCountField);
+    controlPanel.add(setInitValueButton);
+
+    JPanel headerPanel = new JPanel();
+    headerPanel.add(stepLabel, BorderLayout.NORTH);
+    headerPanel.add(controlPanel, BorderLayout.SOUTH);
 
     counterWindow.add(headerPanel, BorderLayout.NORTH);
   }
 
-  private static void setInitialValue(JTextField initialCountField, JLabel countLabel) {
-    count = Integer.parseInt(initialCountField.getText());
-    countLabel.setText(initialCountField.getText());
+  private static void setStep(JTextField initialCountField, JLabel stepLabel) {
+    step = Integer.parseInt(initialCountField.getText());
+    stepLabel.setText(STEP_LABEL_TEXT + step);
   }
 
   private static void addControlButtons(JFrame counterWindow, JLabel countLabel) {
@@ -84,7 +90,7 @@ public class Main {
     decButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        countLabel.setText(String.valueOf(--count));
+        countLabel.setText(String.valueOf(count -= step));
       }
     });
 
@@ -93,7 +99,7 @@ public class Main {
     incButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        countLabel.setText(String.valueOf(++count));
+        countLabel.setText(String.valueOf(count += step));
       }
     });
 
@@ -102,7 +108,7 @@ public class Main {
     resetButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        countLabel.setText(String.valueOf(count = INIT_COUNT));
+        countLabel.setText(String.valueOf(count = 0));
       }
     });
 
